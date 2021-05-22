@@ -28,3 +28,15 @@ test ('should save labs', async () => {
     expect(lab.status).toBe(data.status)
     await Lab.deleteOne({status: "ativo"})    
 })
+
+test ('should update labs', async () => {
+    const lab = await new Lab({nome: generate(), endereco: generate(),status: "ativo"})
+    lab.save(lab)
+    lab.nome = generate()
+    lab.endereco = generate()
+    const response = await request('http://localhost:3000/laboratorios/id', 'put', lab)
+    const updateLab = await lab
+    expect(updateLab.nome).toBe(lab.nome)
+    expect(updateLab.endereco).toBe(lab.endereco)
+    await Lab.deleteOne({_id: lab})    
+})
