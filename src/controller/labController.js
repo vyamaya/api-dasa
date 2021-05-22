@@ -15,6 +15,27 @@ const getActive = (req, res) => {
         }
     })
 }
+
+const getById = (req, res) => {
+    if (!lab._id) {
+        return res.status(400).send({
+            message: 'id é necessário'
+        })
+    }
+    Lab.find({_id: lab._id}, (err, Lab)=>{
+        if (err) return res.status(500).send({
+            message: 'Algo inesperado aconteceu no servidor'           
+        })
+        if (Lab) {
+            res.status(200).send(Lab)
+        } else {
+            res.status(404).send({
+                message: 'Nenhum laboratório cadastrado'
+            })
+        }
+    })
+}
+
 const insert = (req, res) => {
     if (!req.body) {
         res.status(400).send({
@@ -31,7 +52,29 @@ const insert = (req, res) => {
     })
 }
 
+const update = (req, res) => {
+    let lab = req.body
+
+    if (!lab._id) {
+        return res.status(400).send({
+            message: 'id é necessário'
+        })
+    }
+    Lab.updateOne({_id: lab._id}, lab).then(value => {
+            res.status(200).send({
+                message: 'Laboratório atualizado com sucesso'
+            })
+        }).catch((err) => {
+            res.status(500).send({
+                message: 'Algo inesperado aconteceu ao atualizar o laboratório'
+            })
+        })
+}
+
+
 module.exports = {
     getActive,
-    insert
+    getById,
+    insert,
+    update
 }
