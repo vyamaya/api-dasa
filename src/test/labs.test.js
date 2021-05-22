@@ -26,3 +26,13 @@ test('should get labs', async () => {
     expect(labs).toHaveLength(1)
     await Lab.deleteOne({ status: "ativo" })
 })
+
+test.only('should save labs', async () => {
+    const data = { nome: generate(), endereco: generate(), status: "ativo"}
+    const response = await request('http://localhost:3000/laboratorios', 'post', data)
+    const lab = response.data
+    expect(lab.nome).toBe(data.nome)
+    expect(lab.endereco).toBe(data.endereco)
+    expect(lab.status).toBe(data.status)
+    await Lab.deleteOne({status: "ativo"})    
+})
