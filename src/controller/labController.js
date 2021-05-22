@@ -15,7 +15,23 @@ const getActive = (req, res) => {
         }
     })
 }
+const insert = (req, res) => {
+    if (!req.body) {
+        res.status(400).send({
+            message: 'Campos obrigatórios não podem estar vazios'
+        })
+    }
+    const lab = new Lab(req.body)
+    lab.save(lab, (err, data) => {
+        if (err)
+            res.status(500).send({
+                message: err.message
+            })
+        else res.status(201).send(data)
+    })
+}
 
 module.exports = {
-    getActive
+    getActive,
+    insert
 }
