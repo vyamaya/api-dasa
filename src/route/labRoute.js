@@ -1,6 +1,7 @@
 const express = require('express')
-const router = express.Router()
+const labController = require('../controller/labController')
+const labRouter = express.Router()
 
+labRouter.get('/laboratorios', labController.getActive)
 
-
-module.exports = router
+module.exports = labRouter
