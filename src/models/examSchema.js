@@ -1,4 +1,4 @@
-const mongoose = require ('../src/infra/mongodb')
+const mongoose = require ('../infra/mongodb')
 
 const ExamSchema = new mongoose.Schema({
     nome: {
