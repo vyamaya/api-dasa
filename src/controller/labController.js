@@ -17,23 +17,21 @@ const getActive = (req, res) => {
 }
 
 const getById = (req, res) => {
-    if (!lab._id) {
-        return res.status(400).send({
-            message: 'id é necessário'
+    let id = req.params.id
+
+    Lab.findById(id, (err, lab) => {
+        if (err) return res.status(500).send({
+            message: 'Algo inesperado aconteceu no servidor'
+        })
+    })
+
+    if (lab){
+        res.status(200).send(lab)
+    }else{
+        res.status(404).send({
+            message: 'Laboratório não encontrado'
         })
     }
-    Lab.find({_id: lab._id}, (err, Lab)=>{
-        if (err) return res.status(500).send({
-            message: 'Algo inesperado aconteceu no servidor'           
-        })
-        if (Lab) {
-            res.status(200).send(Lab)
-        } else {
-            res.status(404).send({
-                message: 'Nenhum laboratório cadastrado'
-            })
-        }
-    })
 }
 
 const insert = (req, res) => {
@@ -71,10 +69,33 @@ const update = (req, res) => {
         })
 }
 
+const deleteById = (req, res) => {
+    let lab = req.body
+
+    if (!lab._id) {
+        return res.status(400).send({
+            message: 'id é necessário'
+        })
+    }
+    Lab.deleteOne({
+            _id: lab._id
+        })
+        .then(deleted => {
+            res.status(200).send({
+                message: 'Laboratório deletado com sucesso'
+            }).catch((err) => {
+                res.status(500).send({
+                    message: 'Algo inesperado aconteceu ao deletar o laboratório'
+                })
+            })
+        })
+}
+
 
 module.exports = {
     getActive,
     getById,
     insert,
-    update
+    update,
+    deleteById
 }
