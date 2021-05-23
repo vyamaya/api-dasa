@@ -6,13 +6,13 @@ const LabSchema = mongoose.Schema({
         required: true
     },
     endereco: {
-        type: String
+        type: String,
+        required: true
     },
     status: {
         type: String,
         enum: ['ativo', 'inativo'],
         defaut: 'ativo',
-        required: true
     },
 })
 
