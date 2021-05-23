@@ -32,7 +32,27 @@ const insert = (req, res) => {
     })
 }
 
+const update = (req, res) => {
+    let exam = req.body
+
+    if (!exam._id) {
+        return res.status(400).send({
+            message: 'id é necessário'
+        })
+    }
+    Exam.updateOne({_id: exam._id}, exam).then(value => {
+        res.status(200).send({
+            message: 'Exame atualizado com sucesso'
+        }).catch((err) => {
+            res.status(500).send({
+                message: 'Algo inesperado aconteceu ao atualizar o exame'
+            })
+        })
+    })
+}
+
 module.exports = {
     getActive,
-    insert
+    insert,
+    update
 }
