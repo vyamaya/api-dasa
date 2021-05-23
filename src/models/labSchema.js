@@ -2,7 +2,8 @@ const mongoose = require('../infra/mongodb')
 
 const LabSchema = mongoose.Schema({
     nome: {
-        type: String
+        type: String,
+        required: true
     },
     endereco: {
         type: String
@@ -13,10 +14,6 @@ const LabSchema = mongoose.Schema({
         defaut: 'ativo',
         required: true
     },
-    exame: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'exams'
-    }]
 })
 
 mongoose.model('labs', LabSchema)
