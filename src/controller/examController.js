@@ -17,6 +17,7 @@ const getActive = (req, res) => {
 }
 
 const insert = (req, res) => {
+    
     if (!req.body) {
         res.status(400).send({
             message: 'Campos obrigatórios não podem estar vazios'
@@ -51,8 +52,31 @@ const update = (req, res) => {
     })
 }
 
+const deleteById = (req, res) => {
+    let exam = req.body
+
+    if (!exam._id) {
+        return res.status(400).send({
+            message: 'id é necessário'
+        })
+    }
+    Exam.deleteOne({
+            _id: exam._id
+        })
+        .then(deleted => {
+            res.status(200).send({
+                message: 'Exame deletado com sucesso'
+            }).catch((err) => {
+                res.status(500).send({
+                    message: 'Algo inesperado aconteceu ao deletar o exame'
+                })
+            })
+        })
+}
+
 module.exports = {
     getActive,
     insert,
-    update
+    update,
+    deleteById
 }

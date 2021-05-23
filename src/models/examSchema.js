@@ -17,7 +17,7 @@ const ExamSchema = new mongoose.Schema({
     },
     laboratorio: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'labs'
+        ref: ['labs']
     }]
 })
 

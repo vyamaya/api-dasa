@@ -14,10 +14,6 @@ const LabSchema = mongoose.Schema({
         defaut: 'ativo',
         required: true
     },
-    exame: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'exams'
-    }]
 })
 
 mongoose.model('labs', LabSchema)
