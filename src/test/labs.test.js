@@ -1,7 +1,6 @@
 const crypto = require('crypto')
 const axios = require('axios')
 const Lab = require('../models/labSchema')
-const { isValidObjectId } = require('mongoose')
 
 const generate = () => {
     return crypto.randomBytes(15).toString('hex')

@@ -1,35 +1,34 @@
 const Exam = require('../models/examSchema')
+const mongoose = require('../infra/mongodb')
+const { populate } = require('../models/examSchema')
 
 const getActive = (req, res) => {
 
-    Exam.find({'status': 'ativo'}, (err, Exam) => {
-        if (err) return res.status(500).send({
-            message: 'Algo inesperado aconteceu no servidor'
+    Exam.find({'status': 'ativo'}).populate('labs').then((Exam)=>{
+        res.status(200).send(Exam)
+    }).catch((err)=>{
+        res.status(500).send({
+            message: err.message
         })
-        if (Exam) {
-            res.status(200).send(Exam)
-        } else {
-            res.status(404).send({
-                message: 'Nenhum laboratório cadastrado'
-            })
-        }
     })
 }
 
 const insert = (req, res) => {
     
-    if (!req.body) {
+    if (!req.body.tipo) {
         res.status(400).send({
             message: 'Campos obrigatórios não podem estar vazios'
         })
     }
     const exam = new Exam(req.body)
-    exam.save(exam, (err, data) => {
-        if (err)
-            res.status(500).send({
-                message: err.message
-            })
-        else res.send(data)
+    exam.save().then(()=>{
+        res.status(201).send({
+            message: 'Exame cadastrado com sucesso!'
+        })
+    }).catch((err)=>{
+        res.status(500).send({
+            message: err.message
+        })
     })
 }
 

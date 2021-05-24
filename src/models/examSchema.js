@@ -1,4 +1,5 @@
 const mongoose = require ('../infra/mongodb')
+const Schema = mongoose.Schema
 
 const ExamSchema = new mongoose.Schema({
     nome: {
@@ -16,8 +17,9 @@ const ExamSchema = new mongoose.Schema({
         required: true
     },
     laboratorio: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: ['labs']
+        type: Schema.Types.ObjectId,
+        ref: 'labs',
+        required: true
     }]
 })
 

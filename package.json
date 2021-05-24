@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js --ignore test",
     "test": "jest --env node --detectOpenHandles"
   },
   "repository": {
