@@ -1,11 +1,24 @@
 const Exam = require('../models/examSchema')
 const mongoose = require('../infra/mongodb')
-const { populate } = require('../models/examSchema')
+const populate = require('../models/examSchema')
 
 const getActive = (req, res) => {
 
     Exam.find({'status': 'ativo'}).populate('labs').then((Exam)=>{
         res.status(200).send(Exam)
+    }).catch((err)=>{
+        res.status(500).send({
+            message: err.message
+        })
+    })
+}
+
+const getById = (req, res) => {
+    Exam.findById({_id: req.params.id}).then((Exam)=>{
+        if(Exam){res.status(200).send(Exam)}
+        else{res.status(404).send({
+            message: 'Exame não encontrado'
+        })} 
     }).catch((err)=>{
         res.status(500).send({
             message: err.message
@@ -75,6 +88,7 @@ const deleteById = (req, res) => {
 
 module.exports = {
     getActive,
+    getById,
     insert,
     update,
     deleteById
