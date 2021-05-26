@@ -89,6 +89,7 @@ const deleteById = (req, res) => {
 
 module.exports = {
     getActive,
+    getById,
     insert,
     update,
     deleteById
