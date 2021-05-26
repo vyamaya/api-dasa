@@ -13,19 +13,6 @@ const getActive = (req, res) => {
     })
 }
 
-const getById = (req, res) => {
-    Exam.findById({_id: req.params.id}).then((Exam)=>{
-        if(Exam){res.status(200).send(Exam)}
-        else{res.status(404).send({
-            message: 'Exame não encontrado'
-        })} 
-    }).catch((err)=>{
-        res.status(500).send({
-            message: err.message
-        })
-    })
-}
-
 const insert = (req, res) => {
     
     if (!req.body.tipo) {
@@ -88,7 +75,6 @@ const deleteById = (req, res) => {
 
 module.exports = {
     getActive,
-    getById,
     insert,
     update,
     deleteById

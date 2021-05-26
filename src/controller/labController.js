@@ -12,19 +12,6 @@ const getActive = (req, res) => {
     })
 }
 
-const getById = (req, res) => {
-    Lab.findById({_id: req.params.id}).then((Lab)=>{
-        if(Lab){res.status(200).send(Lab)}
-        else{res.status(404).send({
-            message: 'Laboratório não encontrado'
-        })} 
-    }).catch((err)=>{
-        res.status(500).send({
-            message: err.message
-        })
-    })
-}
-
 const insert = (req, res) => {
     if (!req.body) {
         res.status(400).send({
@@ -89,7 +76,6 @@ const deleteById = (req, res) => {
 
 module.exports = {
     getActive,
-    getById,
     insert,
     update,
     deleteById
