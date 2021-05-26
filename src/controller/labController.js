@@ -2,21 +2,9 @@ const mongoose = require('../infra/mongodb')
 const Lab = require('../models/labSchema')
 
 const getActive = (req, res) => {
+
     Lab.find({'status': 'ativo'}).then((Lab)=>{
         res.status(200).send(Lab)
-    }).catch((err)=>{
-        res.status(500).send({
-            message: err.message
-        })
-    })
-}
-
-const getById = (req, res) => {
-    Lab.findById({_id: req.params.id}).then((Lab)=>{
-        if(Lab){res.status(200).send(Lab)}
-        else{res.status(404).send({
-            message: 'Laboratório não encontrado'
-        })} 
     }).catch((err)=>{
         res.status(500).send({
             message: err.message
@@ -88,7 +76,6 @@ const deleteById = (req, res) => {
 
 module.exports = {
     getActive,
-    getById,
     insert,
     update,
     deleteById

@@ -5,7 +5,6 @@ const Lab = require('../models/labSchema')
 const generate = () => {
     return crypto.randomBytes(15).toString('hex')
 }
-
 const request = (url, method, data) => {
     return axios({ url, method, data})
 }
@@ -20,11 +19,12 @@ test ('should get labs', async () => {
     await Lab.deleteOne({_id: lab})
 })
 
-test ('should save labs', async () => {
+test.only ('should save labs', async () => {
     const data = { nome: generate(), endereco: generate(), status: "ativo"}
     const response = await request('http://localhost:3000/laboratorios', 'post', data)
     expect(response.status).toBe(201) 
     const lab = response.data
+    console.log(lab)
     expect(lab.nome).toBe(data.nome)
     expect(lab.endereco).toBe(data.endereco)
     expect(lab.status).toBe(data.status)
